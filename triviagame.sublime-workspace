@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"movie",
+				"movie"
+			],
+			[
 				"i",
 				"i"
 			],
@@ -52,35 +56,45 @@
 	"buffers":
 	[
 		{
-			"file": "index.html",
+			"file": "/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/07-MovieButtonLayout/Unsolved/movie-button-layout-harder.html",
 			"settings":
 			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "assets/css/style.css",
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "assets/javascript/game.js",
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "triviagame.sublime-project",
-			"settings":
-			{
-				"buffer_size": 89,
+				"buffer_size": 1582,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/11-BandsInTownApp/Unsolved/bands-in-town-unsolved.html",
+			"settings":
+			{
+				"buffer_size": 2250,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n  <meta charset=\"utf-8\">\n  <title>Favorite Movies</title>\n  <style type=\"text/css\">\n    button,\n    div,\n    form,\n    input {\n      margin: 10px;\n    }\n  </style>\n</head>\n\n<body>\n\n  <div class=\"container\">\n    <h1>Movie Search</h1>\n\n    <!-- Rendered buttons will get dumped Here  -->\n    <div id=\"buttons-view\"></div>\n\n    <form id=\"movie-form\">\n      <label for=\"movie-input\">Add a Movie Bro</label>\n      <input type=\"text\" id=\"movie-input\"><br>\n\n      <!-- Button triggers new movie to be added -->\n      <input id=\"add-movie\" type=\"submit\" value=\"Add a Movie Bro\">\n    </form>\n\n    <!-- Movies will get dumped here -->\n    <div id=\"movies-view\"></div>\n\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\n    <script type=\"text/javascript\">\n      // Initial array of movies\n      var movies = [\"The Matrix\", \"The Notebook\", \"Mr. Nobody\", \"The Lion King\"];\n\n      // displayMovieInfo function re-renders the HTML to display the appropriate content\n      function displayMovieInfo() {\n\n        var movie = $(this).attr(\"data-name\");\n        var queryURL = \"https://www.omdbapi.com/?t=\" + movie + \"&y=&plot=short&apikey=40e9cece\";\n\n        // Creates AJAX call for the specific movie button being clicked\n        $.ajax({\n          url: queryURL,\n          method: \"GET\"\n        }).done(function(response) {\n            console.log(response);\n\n            $('#movies-view').html('');\n\n          // YOUR CODE GOES HERE!!!\n\n        });\n\n      }\n\n      // Function for displaying movie data\n      function renderButtons() {\n\n        // Deletes the movies prior to adding new movies\n        // (this is necessary otherwise you will have repeat buttons)\n        $(\"#buttons-view\").empty();\n\n        // Loops through the array of movies\n        for (var i = 0; i < movies.length; i++) {\n\n          // Then dynamicaly generates buttons for each movie in the array\n          // This code $(\"<button>\") is all jQuery needs to create the beginning and end tag. (<button></button>)\n          var a = $(\"<button>\");\n          // Adds a class of movie to our button\n          a.addClass(\"movie\");\n          // Added a data-attribute\n          a.attr(\"data-name\", movies[i]);\n          // Provided the initial button text\n          a.text(movies[i]);\n          // Added the button to the buttons-view div\n          $(\"#buttons-view\").append(a);\n        }\n      }\n\n      // This function handles events where the add movie button is clicked\n      $(\"#add-movie\").on(\"click\", function(event) {\n        event.preventDefault();\n        // This line of code will grab the input from the textbox\n        var movie = $(\"#movie-input\").val().trim();\n\n        // The movie from the textbox is then added to our array\n        movies.push(movie);\n\n        // Calling renderButtons which handles the processing of our movie array\n        renderButtons();\n\n      });\n\n      // Adding click event listeners to all elements with a class of \"movie\"\n      $(document).on(\"click\", \".movie\", displayMovieInfo);\n\n\n\n      // Calling the renderButtons function to display the intial buttons\n      renderButtons();\n    </script>\n  </div>\n</body>\n\n</html>\n",
+			"file": "/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/10-WorkingMovieApp/Unsolved/working-movie-app-harder.html",
+			"file_size": 3489,
+			"file_write_time": 131510950344219093,
+			"settings":
+			{
+				"buffer_size": 3204,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "# Bootcamp Week 3 Notes\n\n# 9.25.2017\n\nHTML:\n\n\t*Basic parts of HTML\n\t*Using inline, internal, and external style sheets\n\t*Using relative paths\n\t*IDs, classes, and element names\n\nGit:\n\n\t*Advantages of git\n\t*Using git Bash\n\nBootstrap:\n\n\t*Used prebuilt CSS library\n\t*Steps to include\n\t*Dissecting grid system / components\n\t*General understanding of @media queries and responsive design\n\nJavascript:\n\n\t*Javascript in relation to HTML, CSS\n\t*Variables, Array, Console.log, alets, confirms, prompts, loops, etc...\n\t*General organization\n\njQuery:\n\n--\n\nAll things that are global are called by the window object\n\nthis == refers to button in standard javascript\n$('this') == refers with jQuery functions\n\n--\n\nWait in javascipt:\nsetTimeout();\nclearTimeout();\n\n---\n\n\n# 9.26.2017\n\n### Making a Stopwatch\n\n### Tech Interviews\n\n~ half day process\n\n1. Tech screen Interview\n\t* Questions about tech specifics; possibly multiple rounds with multiple interviewers\n\t* \"I don't know.\"\n\t* Lead with curiosity\n\t* Pick the part of the question you do have some knowledge about and put that out there\n\n2. Culture Fit\n\t* Often re: past projects / challenges\n\t* Two-way Street\n\n### Bashing\n\n### Git\n\n* git stash - 'recycle'\n\n---\n\n# 9.27.2017\n\nDifficulty Up\n\n\t*Help Other People!\n\t*Repeat the solution / *Code Kata* Iterate different appraoches\n\t*Try things independently\n\nDifficulty Down\n\n\t*Take smaller steps\n\t*Ask others how they did it\n\t*exercism.io -- command-line drills\n\t*Tutoring: NU and outside\n\n### JSON\n\t*Object notation used in javascript\n\t*Provides information that javascript program can directly interact with\n\n### API Call\n\nCommon: www.domain.com/?querystring&apikey/hashkey\n\nspace in query: + or %20\nkey can be after /, #, &\n\nPostman Extension for Chrome == popular API explorer\ncurl command in bash can be used to pull API data\n\n### AJAX Calls\n\n$.ajax({url: queryURL}).done(whenDone);\n\n---\n\n# 9.28.2017\n\n### Apis Recap\n\nAPIs are the bridge between different components\n\t* Getting and sending data to database\n\t* Pull in pre-built code / components (Google Maps, Spotify Tools, etc)\n\t* Interface with physical sensors / hardware (Nest, Hue)\n\n### JSON Recap\n\nJavascript Object Notation\n\t* formatting of data pulled from web \n\t* ajax jQuery method is used to retrieve from URL\n\t* $.ajax passes URL and method (often 'GET' to retrieve, 'POST' to send)\n\t\n*Origin Server* : Server data served from, may call other servers to send additional data (ex. Node.js server sending data pulled from Mongo db)\n\nJSON.stringify(x) -> returns stringified version of object x\n\nPrevent page reload from submit button:\n event.preventDefault();\n\n * jQuery technique to create element \n\n```\nvar a = $(\"<button>\");\na.addClass(\"movie\");\na.attr(\"data-name\", movies[i]);\na.text(movies[i]);\n$(\"#movies-view\").append(a);\n ```\n\n ",
+			"file": "/C/Users/thesc/Documents/bootcamp-content/class-notes/week-3.md",
+			"file_size": 2925,
+			"file_write_time": 131510923819094519,
+			"settings":
+			{
+				"buffer_size": 2789,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		}
 	],
@@ -138,17 +152,29 @@
 	"expanded_folders":
 	[
 		"/C/Users/thesc/Documents/bootcamp-content",
-		"/C/Users/thesc/Documents/bootcamp-content/homework",
-		"/C/Users/thesc/Documents/bootcamp-content/homework/current",
-		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game",
-		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game/Instructions",
-		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game/TriviaGame",
-		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game/TriviaGame/assets",
-		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game/TriviaGame/assets/css",
-		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game/TriviaGame/assets/javascript"
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/05-Bujumbura",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/05-Bujumbura/Unsolved",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/07-MovieButtonLayout",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/07-MovieButtonLayout/Solved",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/07-MovieButtonLayout/Unsolved",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/10-WorkingMovieApp",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/10-WorkingMovieApp/Unsolved",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/11-BandsInTownApp",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/11-BandsInTownApp/Unsolved"
 	],
 	"file_history":
 	[
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/10-WorkingMovieApp/README.md",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/06-MovieJSONDump/Unsolved/movie-json-dump.html",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/07-MovieButtonLayout/README.md",
+		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/05-Bujumbura/Unsolved/bujumbura-harder.html",
+		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game/TriviaGame/index.html",
+		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game/TriviaGame/assets/css/style.css",
+		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game/TriviaGame/assets/javascript/game.js",
+		"/C/Users/thesc/Documents/bootcamp-content/homework/current/05-trivia-game/TriviaGame/triviagame.sublime-project",
 		"/C/Users/thesc/Documents/bootcamp-content/class-notes/week-3.md",
 		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/02-Ajax_OMDB/single-ajax.html",
 		"/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/03-AJAX_to_HTML/Unsolved/ajax-to-html.html",
@@ -290,125 +316,132 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "index.html",
+					"file": "/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/07-MovieButtonLayout/Unsolved/movie-button-layout-harder.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 1582,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1356,
+								1356
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax"
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 2,
-			"sheets":
-			[
-				{
-					"buffer": 1,
-					"file": "assets/css/style.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "assets/javascript/game.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 936.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "triviagame.sublime-project",
-					"semi_transient": true,
+					"buffer": 1,
+					"file": "/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/11-BandsInTownApp/Unsolved/bands-in-town-unsolved.html",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 89,
+						"buffer_size": 2250,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								1461,
+								1461
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 856.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/thesc/Documents/bootcamp-content/class-repo-local/06-ajax/01-Activities/10-WorkingMovieApp/Unsolved/working-movie-app-harder.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3204,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								388,
+								388
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "/C/Users/thesc/Documents/bootcamp-content/class-notes/week-3.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2789,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2789,
+								2789
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3848.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -442,7 +475,7 @@
 		"cols":
 		[
 			0.0,
-			0.5,
+			0.652519732848,
 			1.0
 		],
 		"rows":
@@ -490,7 +523,7 @@
 		],
 		"width": 0.0
 	},
-	"selected_group": 1,
+	"selected_group": 0,
 	"settings":
 	{
 	},
@@ -498,7 +531,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 273.0,
+	"side_bar_width": 395.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
