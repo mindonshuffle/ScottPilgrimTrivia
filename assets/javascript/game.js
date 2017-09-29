@@ -2,8 +2,11 @@
 
 var questionsTotal = 0;
 var questionsRight = 0;
+
+// highscore not implemented
 //var playerScore = 0;
 //var highScore = 0;
+
 var timerInterval = 0;
 
 // Adjust to set length of game
@@ -84,6 +87,9 @@ var questions = [
 
 ];
 
+//create array to store used question indices
+var askedQuestions = [];
+
 var gameMode = 'startGame';
 
 //--- --- Global Function / Object Definitions --- ---
@@ -92,9 +98,9 @@ var gameMode = 'startGame';
 function refreshScreen(){
 
   switch(gameMode){
-    
+
     case "startGame": 
-      
+
       // clear panel
       $('#main-panel').html('');
       $('#timer').text('');
@@ -119,9 +125,9 @@ function refreshScreen(){
       break;    
 
 // Begin Question Panel
-    case "triviaQuestion":
+case "triviaQuestion":
 
-      questionsTotal ++;
+questionsTotal ++;
 
       // clear panel
       $('#main-panel').html('');
@@ -139,7 +145,7 @@ function refreshScreen(){
 
         //when timer reaches 0, clear interval and move to Results
         if(currentTimer===0){
-          
+
           clearInterval(timerInterval);
           $('#timer').text("Time's Up!");
 
@@ -151,7 +157,16 @@ function refreshScreen(){
 
       //randomly select a question from the array of questions
 
-      var currentQuestion = questions[Math.floor(Math.random()*questions.length)];
+      var currentIndex = Math.floor(Math.random()*questions.length)
+
+      //if question previously used, generate again
+      while( askedQuestions.indexOf(currentIndex) != -1 ){
+        currentIndex = Math.floor(Math.random()*questions.length)
+      }
+
+      askedQuestions.push(currentIndex);
+
+      var currentQuestion = questions[currentIndex];
 
       // display question in main-panel
 
@@ -170,7 +185,7 @@ function refreshScreen(){
       var answerList = [1,2,3,4]
 
       for( var i = 0; i < 4; i++){
-        
+
         var currentAnswerIndex = Math.floor(Math.random()*answerList.length);
         var currentButton = $('<button>')
         //SUPER PROUD OF THIS LINE
@@ -199,31 +214,23 @@ function refreshScreen(){
       break;
 
 // begin Result panel
-    case "triviaResult":
+case "triviaResult":
 
-      // $('#main-panel').html('');
-
-  // initialize result screen timer
-
+      // initialize result screen timer (not displayed)
       var currentTimer = 3;
-      // $('#timer').text(currentTimer);
       
       timerInterval = setInterval(function(){
 
         //decrement by 1
         currentTimer --;
 
-        //write time to #timer
-        //$('#timer').text(currentTimer);
-
         //when timer reaches 0, clear interval and move to Results
         if(currentTimer===0){
-          
+
           clearInterval(timerInterval);
 
           //when finished, move to next question
           //unless max questions reached, then move to endGame
-
           if( questionsTotal === maxQuestions ){ 
             gameMode = "endGame";
             refreshScreen();
@@ -236,27 +243,25 @@ function refreshScreen(){
       }, 1000);
 
       //hide unguessed answers
-
       $('.incorrect-answer').css('visibility', 'hidden');
 
       //highlight correct answer in green
-
       $('.correct-answer').addClass('btn-success');
       
       break;    
 
 // Begin EndGame Panel    
-    case "endGame":
+case "endGame":
 
-      console.log( questionsRight +' out of ' +questionsTotal );
+console.log( questionsRight +' out of ' +questionsTotal );
 
         //clear panel
         $('#main-panel').html('');
         $('#timer').text('');
 
-        //if score > highscore, highscore=score
+        //if score > highscore, highscore=score *** Not Implemented
 
-           //show image, happy if correct >= 3, else sad
+        //show image, happy if correct >= 3, else sad
         if(questionsRight >= 3){
           $('#main-panel').append('<img class="end-image" src="https://media.giphy.com/media/I4F1CxDZgikeY/giphy.gif">')
         }
@@ -270,8 +275,6 @@ function refreshScreen(){
         resultText.addClass('jumbotron');
         $('#main-panel').append(resultText);
 
-     
-
         // show restart button
         var startButton = $('<button>');
         startButton.text('Restart Game!');
@@ -283,7 +286,8 @@ function refreshScreen(){
 
 //--- --- Main Logic --- ---
 
-refreshScreen();
+//when page loads, draw the screen
+$( document ).ready(refreshScreen());
 
 //--- ---- CLICK HANDLERS --- ---
 
@@ -326,16 +330,3 @@ $(document).on("click", ".answer-button", function(){
   }
 
 });
-
-
-/*--- --- PSEUDO CODE --- ---
-
-
-*/
-
-/*--- --- NOTES TO SELF --- ---
-
-*Ensure "on loaded" function around main code
-
-
-*/

@@ -1,6 +1,6 @@
 
 body{
-	background-image: url(../images/panel-background.png);
+	background-image: url(../images/background.png);
 	background-size: 100%;
 }
 
@@ -55,6 +55,7 @@ h1{
 
 .jumbotron{
 	background-color: black;
+
 }
 
 .panel{ 
@@ -67,14 +68,5 @@ h1{
 	top: 50px;
 	text-align: center;
 	background-color: black;
-	/*background-image: url(../images/panel-background.png);*/
-	/*background-size: 80%;*/
-}
 
-.correct-guessed-answer{
-	background-color: green;
-}
-
-.incorrect-guessed-answer{
-	background-color: red;
 }
