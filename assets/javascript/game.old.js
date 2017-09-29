@@ -2,8 +2,8 @@
 
 var questionsTotal = 0;
 var questionsRight = 0;
-var playerScore = 0;
-var highScore = 0;
+//var playerScore = 0;
+//var highScore = 0;
 var timerInterval = 0;
 
 // Adjust to set length of game
@@ -35,20 +35,26 @@ function refreshScreen(){
   switch(gameMode){
     
     case "startGame": 
-      console.log('game start')
-
+      
       // clear panel
       $('#main-panel').html('');
+      $('#timer').text('');
 
       // create/append title
+      $('#main-panel').append('<img class="inline-image sprite-image" src="https://media.giphy.com/media/14gztnGq8HtZUQ/giphy.gif">')
+
       var title = $('<h1>');
-      title.text('Trivia Game!!');
+      title.text('Scott Pilgrim Trivia');
       $('#main-panel').append(title);
+
+      $('#main-panel').append('<img class="inline-image sprite-image" src="https://media.giphy.com/media/1L3JJulZNiquQ/giphy.gif">')
+
+      $('#main-panel').append('<br>');
 
       // create/append startbutton
       var startButton = $('<button>');
-      startButton.text('Start Game!');
-      startButton.addClass('start-button');
+      startButton.text('Press Start!');
+      startButton.addClass('start-button btn btn-default');
       $('#main-panel').append(startButton);
       
       break;    
@@ -57,7 +63,6 @@ function refreshScreen(){
     case "triviaQuestion":
 
       questionsTotal ++;
-      console.log(questionsTotal);
 
       // clear panel
       $('#main-panel').html('');
@@ -75,8 +80,9 @@ function refreshScreen(){
 
         //when timer reaches 0, clear interval and move to Results
         if(currentTimer===0){
-          console.log("End of Question");
+          
           clearInterval(timerInterval);
+          $('#timer').text("Time's Up!");
 
           gameMode = "triviaResult";
           refreshScreen();
@@ -87,65 +93,73 @@ function refreshScreen(){
       //randomly select a question from the array of questions
 
       var currentQuestion = questions[Math.floor(Math.random()*questions.length)];
-      console.log(currentQuestion.questionText);
 
       // display question in main-panel
 
+      var currentQuestionDiv = $('<div>');
       var currentQuestionText = $('<h2>');
+
+      currentQuestionText.addClass('jumbotron');
+
       currentQuestionText.text(currentQuestion.questionText);
 
-      $('#main-panel').append(currentQuestionText);
+      currentQuestionDiv.append(currentQuestionText)
+      $('#main-panel').append(currentQuestionDiv);
 
       // display answer buttons in random order
 
+      var answerList = [1,2,3,4]
+
       for( var i = 0; i < 4; i++){
-        console.log(hi);
-
-        var answerList = [1,2,3,4]
-        for( var j = 0; j < answerList.length; j++){
-          var currentAnswer = Math.floor(Math.random()*answerList.length);
-
-          var currentButton = $('<button>')
+        
+        var currentAnswerIndex = Math.floor(Math.random()*answerList.length);
+        var currentButton = $('<button>')
         //SUPER PROUD OF THIS LINE
-          currentButton.text(eval('currentQuestion.answer'+(i+1)));
-          currentButton.addClass('answer-button');
+        currentButton.text(eval('currentQuestion.answer'+(answerList[currentAnswerIndex])));
+        currentButton.addClass('answer-button btn btn-default');
 
-          // adds data to button to indicate correct value
-          if( answerList[currentAnswer] === 0)
-          {
-            currentButton.attr('data-value','correct');
-          }
-
-          else{
-            currentButton.attr('data-value','incorrect');
-          }
-
-          $('#main-panel').append(currentButton);
+        // adds data to button to indicate correct value
+        if( answerList[currentAnswerIndex] === 1)
+        {
+          currentButton.attr('data-value','correct');
+          currentButton.addClass('correct-answer');
         }
-      }
 
+        else{
+          currentButton.attr('data-value','incorrect');
+          currentButton.addClass('incorrect-answer');
+        }
+
+        answerList.splice(currentAnswerIndex, 1);
+        
+
+        $('#main-panel').append(currentButton);
+        // $('#main-panel').append('<br>');
+      }
+      
       break;
 
 // begin Result panel
     case "triviaResult":
 
-      $('#main-panel').html('');
+      // $('#main-panel').html('');
 
   // initialize result screen timer
 
       var currentTimer = 3;
-      $('#timer').text(currentTimer);
+      // $('#timer').text(currentTimer);
+      
       timerInterval = setInterval(function(){
 
         //decrement by 1
         currentTimer --;
 
         //write time to #timer
-        $('#timer').text(currentTimer);
+        //$('#timer').text(currentTimer);
 
         //when timer reaches 0, clear interval and move to Results
         if(currentTimer===0){
-          console.log("End of Result");
+          
           clearInterval(timerInterval);
 
           //when finished, move to next question
@@ -163,8 +177,12 @@ function refreshScreen(){
       }, 1000);
 
       //hide unguessed answers
-      //if wrong answer guessed, highlight in red
-      //highlight correct answer in green 
+
+      $('.incorrect-answer').css('visibility', 'hidden');
+
+      //highlight correct answer in green
+
+      $('.correct-answer').addClass('btn-success');
       
       break;    
 
@@ -175,19 +193,20 @@ function refreshScreen(){
 
         //clear panel
         $('#main-panel').html('');
+        $('#timer').text('');
 
         //if score > highscore, highscore=score
 
         //show results info
-
-        var resultText = $('<h1>');
-        resultText.text('You got ' +questionsRight +' out of ' +questionsTotal );
+        var resultText = $('<div>');
+        resultText.html('<h2>You got ' +questionsRight +' out of ' +questionsTotal +'</h2>');
+        resultText.addClass('jumbotron');
         $('#main-panel').append(resultText);
 
         // show restart button
         var startButton = $('<button>');
-        startButton.text('Start Game!');
-        startButton.addClass('start-button');
+        startButton.text('Restart Game!');
+        startButton.addClass('start-button btn btn-default');
         $('#main-panel').append(startButton);
 
       }
@@ -199,7 +218,6 @@ refreshScreen();
 
 //--- ---- CLICK HANDLERS --- ---
 
-
 // when start button clicked
 $(document).on("click", ".start-button", function(){
 
@@ -209,8 +227,6 @@ $(document).on("click", ".start-button", function(){
   questionsRight = 0;
   playerScore = 0;
 
-  console.log('start');
-
   gameMode = "triviaQuestion";
 
   refreshScreen();
@@ -219,41 +235,31 @@ $(document).on("click", ".start-button", function(){
 
 //when answer button clicked
 $(document).on("click", ".answer-button", function(){
+  //prevent multiple button clicks per question
+  if( gameMode === "triviaQuestion"){
+    clearInterval(timerInterval);
 
-  clearInterval(timerInterval);
+    console.log($(this).attr('data-value'));
+    
+    $(this).removeClass('incorrect-answer');
 
-  console.log('answer');
+    // if answer correct, increment correct answers, if guessed wrong highlight in red
 
-  console.log($(this).attr('data-value'));
+    if( $(this).attr('data-value') === 'correct'){
+      questionsRight ++;
+    }
+    else{
+      $(this).addClass('btn-danger');
+    }
+    gameMode = "triviaResult";
 
-  // if answer correct, increment correct answers
-
-  if( $(this).attr('data-value') === 'correct'){
-    questionsRight ++;
+    refreshScreen();
   }
-
-  gameMode = "triviaResult";
-
-  refreshScreen();
 
 });
 
 
 /*--- --- PSEUDO CODE --- ---
-
-
-Timer:
-
-set to 20 seconds
-
-setrecurringinterval 1 sec to (
-  decrement time
-  refresh displayed time
-  if timeRemaining==0(
-    //display out of time//
-    set gameMode to results  
-  )
-)
 
 
 */

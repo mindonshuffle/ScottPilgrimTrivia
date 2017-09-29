@@ -1,19 +1,74 @@
-#start-button{
 
+body{
+	background-image: url(../images/panel-background.png);
+	background-size: 100%;
+}
+
+.sprite-image{
+	width: 150px;
+}
+
+button{
+	width: 450px;
+}
+
+.btn{
+	padding: 20px;
+	background-color: black;
+	margin: 10px;
+}
+
+#timer{
+	color: yellow;
+}
+
+.btn-default{
+	color: white;
+}
+
+.btn-danger{
+	background-color: red;
+}
+
+.btn-success{
+	background-color: green;
+}
+
+.panel-footer {
+	background-color: black;
+	border: none;
+	padding-bottom: 25px;
+	padding-top: 20px;
 }
 
 .inline-image{
 	display: inline;
 }
 
+.end-image{
+	width: 250px;
+}
+
 h1{
 	display: inline;
 }
 
-.panel{
+.jumbotron{
+	background-color: black;
+}
+
+.panel{ 
+
+   font-family: 'Press Start 2P', cursive;
+   color: magenta;
+
+	border: 20px solid magenta;
 	position: relative;
 	top: 50px;
 	text-align: center;
+	background-color: black;
+	/*background-image: url(../images/panel-background.png);*/
+	/*background-size: 80%;*/
 }
 
 .correct-guessed-answer{
