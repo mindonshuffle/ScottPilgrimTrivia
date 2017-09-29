@@ -2,3 +2,14 @@
 
 }
 
+.panel{
+	text-align: center;
+}
+
+.correct-guessed-answer{
+	background-color: green;
+}
+
+.incorrect-guessed-answer{
+	background-color: red;
+}

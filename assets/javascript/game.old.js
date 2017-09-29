@@ -98,40 +98,38 @@ function refreshScreen(){
 
       // display answer buttons in random order
 
-      var answerList = [1,2,3,4]
-
       for( var i = 0; i < 4; i++){
-        
-        var currentAnswerIndex = Math.floor(Math.random()*answerList.length);
-        var currentButton = $('<button>')
+        console.log(hi);
+
+        var answerList = [1,2,3,4]
+        for( var j = 0; j < answerList.length; j++){
+          var currentAnswer = Math.floor(Math.random()*answerList.length);
+
+          var currentButton = $('<button>')
         //SUPER PROUD OF THIS LINE
-        currentButton.text(eval('currentQuestion.answer'+(answerList[currentAnswerIndex])));
-        currentButton.addClass('answer-button');
+          currentButton.text(eval('currentQuestion.answer'+(i+1)));
+          currentButton.addClass('answer-button');
 
-        // adds data to button to indicate correct value
-        if( answerList[currentAnswerIndex] === 1)
-        {
-          currentButton.attr('data-value','correct');
-          currentButton.addClass('correct-answer');
+          // adds data to button to indicate correct value
+          if( answerList[currentAnswer] === 0)
+          {
+            currentButton.attr('data-value','correct');
+          }
+
+          else{
+            currentButton.attr('data-value','incorrect');
+          }
+
+          $('#main-panel').append(currentButton);
         }
-
-        else{
-          currentButton.attr('data-value','incorrect');
-          currentButton.addClass('incorrect-answer');
-        }
-
-        answerList.splice(currentAnswerIndex, 1);
-        console.log(answerList);
-
-        $('#main-panel').append(currentButton);
       }
-      
+
       break;
 
 // begin Result panel
     case "triviaResult":
 
-      // $('#main-panel').html('');
+      $('#main-panel').html('');
 
   // initialize result screen timer
 
@@ -165,9 +163,6 @@ function refreshScreen(){
       }, 1000);
 
       //hide unguessed answers
-
-      $('.incorrect-answer').css('visibility', 'hidden');
-
       //if wrong answer guessed, highlight in red
       //highlight correct answer in green 
       
@@ -225,27 +220,21 @@ $(document).on("click", ".start-button", function(){
 //when answer button clicked
 $(document).on("click", ".answer-button", function(){
 
-  if( gameMode === "triviaQuestion"){
-    clearInterval(timerInterval);
+  clearInterval(timerInterval);
 
-    console.log($(this).attr('data-value'));
+  console.log('answer');
 
-    
-    $(this).removeClass('incorrect-answer');
+  console.log($(this).attr('data-value'));
 
-    // if answer correct, increment correct answers
+  // if answer correct, increment correct answers
 
-    if( $(this).attr('data-value') === 'correct'){
-      questionsRight ++;
-      $(this).addClass('correct-guessed-answer');
-    }
-    else{
-      $(this).addClass('incorrect-guessed-answer');
-    }
-    gameMode = "triviaResult";
-
-    refreshScreen();
+  if( $(this).attr('data-value') === 'correct'){
+    questionsRight ++;
   }
+
+  gameMode = "triviaResult";
+
+  refreshScreen();
 
 });
 
