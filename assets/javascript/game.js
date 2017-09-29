@@ -300,6 +300,8 @@ $(document).on("click", ".start-button", function(){
   questionsRight = 0;
   playerScore = 0;
 
+  askedQuestions = [];
+
   gameMode = "triviaQuestion";
 
   refreshScreen();
