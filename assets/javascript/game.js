@@ -2,8 +2,8 @@
 
 var questionsTotal = 0;
 var questionsRight = 0;
-var playerScore = 0;
-var highScore = 0;
+//var playerScore = 0;
+//var highScore = 0;
 var timerInterval = 0;
 
 // Adjust to set length of game
@@ -35,8 +35,7 @@ function refreshScreen(){
   switch(gameMode){
     
     case "startGame": 
-      console.log('game start')
-
+      
       // clear panel
       $('#main-panel').html('');
 
@@ -57,7 +56,6 @@ function refreshScreen(){
     case "triviaQuestion":
 
       questionsTotal ++;
-      console.log(questionsTotal);
 
       // clear panel
       $('#main-panel').html('');
@@ -75,7 +73,7 @@ function refreshScreen(){
 
         //when timer reaches 0, clear interval and move to Results
         if(currentTimer===0){
-          console.log("End of Question");
+          
           clearInterval(timerInterval);
 
           gameMode = "triviaResult";
@@ -87,7 +85,6 @@ function refreshScreen(){
       //randomly select a question from the array of questions
 
       var currentQuestion = questions[Math.floor(Math.random()*questions.length)];
-      console.log(currentQuestion.questionText);
 
       // display question in main-panel
 
@@ -121,7 +118,7 @@ function refreshScreen(){
         }
 
         answerList.splice(currentAnswerIndex, 1);
-        console.log(answerList);
+        
 
         $('#main-panel').append(currentButton);
       }
@@ -147,7 +144,7 @@ function refreshScreen(){
 
         //when timer reaches 0, clear interval and move to Results
         if(currentTimer===0){
-          console.log("End of Result");
+          
           clearInterval(timerInterval);
 
           //when finished, move to next question
@@ -168,8 +165,7 @@ function refreshScreen(){
 
       $('.incorrect-answer').css('visibility', 'hidden');
 
-      //if wrong answer guessed, highlight in red
-      //highlight correct answer in green 
+      //highlight correct answer in green *** not implemented
       
       break;    
 
@@ -204,7 +200,6 @@ refreshScreen();
 
 //--- ---- CLICK HANDLERS --- ---
 
-
 // when start button clicked
 $(document).on("click", ".start-button", function(){
 
@@ -214,8 +209,6 @@ $(document).on("click", ".start-button", function(){
   questionsRight = 0;
   playerScore = 0;
 
-  console.log('start');
-
   gameMode = "triviaQuestion";
 
   refreshScreen();
@@ -224,12 +217,11 @@ $(document).on("click", ".start-button", function(){
 
 //when answer button clicked
 $(document).on("click", ".answer-button", function(){
-
+  //prevent multiple button clicks per question
   if( gameMode === "triviaQuestion"){
     clearInterval(timerInterval);
 
     console.log($(this).attr('data-value'));
-
     
     $(this).removeClass('incorrect-answer');
 
@@ -251,20 +243,6 @@ $(document).on("click", ".answer-button", function(){
 
 
 /*--- --- PSEUDO CODE --- ---
-
-
-Timer:
-
-set to 20 seconds
-
-setrecurringinterval 1 sec to (
-  decrement time
-  refresh displayed time
-  if timeRemaining==0(
-    //display out of time//
-    set gameMode to results  
-  )
-)
 
 
 */
