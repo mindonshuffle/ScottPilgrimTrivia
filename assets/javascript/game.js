@@ -4,37 +4,36 @@ var questionsTotal = 0;
 var questionsRight = 0;
 var playerScore = 0;
 var highScore = 0;
+var timerInterval = 0;
 
+// Adjust to set length of game
 var maxQuestions = 2;
 
 var questions = [{"questionText":"This is a question?",
-"rightAnswer":"This is the right answer",
-"wrongAnswer1":"This is 1 wrong answer",
-"wrongAnswer2":"This is 2 wrong answer",
-"wrongAnswer3":"This is 3 wrong answer"},
+"answer1":"This is the right answer",
+"answer2":"This is 2 wrong answer",
+"answer3":"This is 3 wrong answer",
+"answer4":"This is 4 wrong answer"},
 {"questionText":"This is second question?",
-"rightAnswer":"This is the right answer",
-"wrongAnswer1":"This is 1 wrong answer",
-"wrongAnswer2":"This is 2 wrong answer",
-"wrongAnswer3":"This is 3 wrong answer"},]
+"answer1":"This is the right answer",
+"answer2":"This is 2 wrong answer",
+"answer3":"This is 3 wrong answer",
+"answer4":"This is 4 wrong answer"},
+{"questionText":"This is a third question?",
+"answer1":"This is the right answer",
+"answer2":"This is 2 wrong answer",
+"answer3":"This is 3 wrong answer",
+"answer4":"This is 4 wrong answer"}];
 
 var gameMode = 'startGame';
 
 //--- --- Global Function / Object Definitions --- ---
 
-//constructor array for Questions
-// function Question(questionText, answerCorrect, answerWrong1, answerWrong2, answerWrong3) {
-//   this.questionText = questionText;
-//   this.answer1 = answer1;
-//   this.answer2 = answer2;
-//   this.answer3 = answer3;
-//   this.answer4 = answer4;
-// }
-
 //evaluates game mode and displays appropriate elements
 function refreshScreen(){
 
   switch(gameMode){
+    
     case "startGame": 
       console.log('game start')
 
@@ -54,18 +53,19 @@ function refreshScreen(){
       
       break;    
 
+// Begin Question Panel
     case "triviaQuestion":
 
       questionsTotal ++;
       console.log(questionsTotal);
 
       // clear panel
-      $('#main-panel').html('Question Test');
+      $('#main-panel').html('');
 
       // initialize question round timer
       var currentTimer = 7;
       $('#timer').text(currentTimer);
-      var timerInterval = setInterval(function(){
+      timerInterval = setInterval(function(){
 
         //decrement by 1
         currentTimer --;
@@ -84,20 +84,53 @@ function refreshScreen(){
         }
       }, 1000);
 
-      // display question
-      // display answer buttons
+      //randomly select a question from the array of questions
 
-    break;
+      var currentQuestion = questions[Math.floor(Math.random()*questions.length)];
+      console.log(currentQuestion.questionText);
 
+      // display question in main-panel
 
+      var currentQuestionText = $('<h2>');
+      currentQuestionText.text(currentQuestion.questionText);
+
+      $('#main-panel').append(currentQuestionText);
+
+      // display answer buttons in random order
+
+      for( var i = 0; i < 4; i++){
+
+        var currentButton = $('<button>')
+      //SUPER PROUD OF THIS LINE
+        currentButton.text(eval('currentQuestion.answer'+(i+1)));
+        currentButton.addClass('answer-button');
+
+        // adds data to button to indicate correct value
+        if( i === 0)
+        {
+          currentButton.attr('data-value','correct');
+        }
+
+        else{
+          currentButton.attr('data-value','incorrect');
+        }
+
+        $('#main-panel').append(currentButton);
+
+      }
+
+      break;
+
+// begin Result panel
     case "triviaResult":
 
-      $('#main-panel').html('results display');
-        
-  // initialize question round timer
+      $('#main-panel').html('');
+
+  // initialize result screen timer
+
       var currentTimer = 3;
       $('#timer').text(currentTimer);
-      var timerInterval = setInterval(function(){
+      timerInterval = setInterval(function(){
 
         //decrement by 1
         currentTimer --;
@@ -114,8 +147,8 @@ function refreshScreen(){
           //unless max questions reached, then move to endGame
 
           if( questionsTotal === maxQuestions ){ 
-          gameMode = "endGame";
-          refreshScreen();
+            gameMode = "endGame";
+            refreshScreen();
           }
           else{
             gameMode = "triviaQuestion";
@@ -124,64 +157,81 @@ function refreshScreen(){
         }
       }, 1000);
 
-
-
       //hide unguessed answers
       //if wrong answer guessed, highlight in red
       //highlight correct answer in green 
       
       break;    
 
-      
+// Begin EndGame Panel    
+    case "endGame":
 
-
-
-      case "endGame":
-
-        console.log("End of Game");
+      console.log( questionsRight +' out of ' +questionsTotal );
 
         //clear panel
+        $('#main-panel').html('');
+
         //if score > highscore, highscore=score
+
         //show results info
+
+        var resultText = $('<h1>');
+        resultText.text('You got ' +questionsRight +' out of ' +questionsTotal )
+        $('#main-panel').append(resultText);
+
         // show restart button
+        var startButton = $('<button>');
+        startButton.text('Start Game!');
+        startButton.addClass('start-button');
+        $('#main-panel').append(startButton);
 
-          var startButton = $('<button>');
-          startButton.text('Start Game!');
-          startButton.addClass('start-button');
-          $('#main-panel').append(startButton);
-
-        
-        //break;
-
+      }
     }
-  }
 
 //--- --- Main Logic --- ---
 
 refreshScreen();
 
-
-
 //--- ---- CLICK HANDLERS --- ---
 
-//$('.start-button').on("click", function(){
 
+// when start button clicked
 $(document).on("click", ".start-button", function(){
 
-//initialize variables
+  //initialize variables
 
-questionsTotal = 0;
-questionsRight = 0;
-playerScore = 0;
+  questionsTotal = 0;
+  questionsRight = 0;
+  playerScore = 0;
 
-console.log('start');
+  console.log('start');
 
-gameMode = "triviaQuestion";
+  gameMode = "triviaQuestion";
 
-refreshScreen();
+  refreshScreen();
 
 });
 
+//when answer button clicked
+$(document).on("click", ".answer-button", function(){
+
+  clearInterval(timerInterval);
+
+  console.log('answer');
+
+  console.log($(this).attr('data-value'));
+
+  // if answer correct, increment correct answers
+
+  if( $(this).attr('data-value') === 'correct'){
+    questionsRight ++;
+  }
+
+  gameMode = "triviaResult";
+
+  refreshScreen();
+
+});
 
 
 /*--- --- PSEUDO CODE --- ---
