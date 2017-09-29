@@ -38,6 +38,7 @@ function refreshScreen(){
       
       // clear panel
       $('#main-panel').html('');
+      $('#timer').text('');
 
       // create/append title
       var title = $('<h1>');
@@ -47,7 +48,7 @@ function refreshScreen(){
       // create/append startbutton
       var startButton = $('<button>');
       startButton.text('Start Game!');
-      startButton.addClass('start-button');
+      startButton.addClass('start-button btn btn-default');
       $('#main-panel').append(startButton);
       
       break;    
@@ -75,6 +76,7 @@ function refreshScreen(){
         if(currentTimer===0){
           
           clearInterval(timerInterval);
+          $('#timer').text("Time's Up!");
 
           gameMode = "triviaResult";
           refreshScreen();
@@ -103,7 +105,7 @@ function refreshScreen(){
         var currentButton = $('<button>')
         //SUPER PROUD OF THIS LINE
         currentButton.text(eval('currentQuestion.answer'+(answerList[currentAnswerIndex])));
-        currentButton.addClass('answer-button');
+        currentButton.addClass('answer-button btn btn-default');
 
         // adds data to button to indicate correct value
         if( answerList[currentAnswerIndex] === 1)
@@ -121,6 +123,7 @@ function refreshScreen(){
         
 
         $('#main-panel').append(currentButton);
+        $('#main-panel').append('<br>');
       }
       
       break;
@@ -133,14 +136,15 @@ function refreshScreen(){
   // initialize result screen timer
 
       var currentTimer = 3;
-      $('#timer').text(currentTimer);
+      // $('#timer').text(currentTimer);
+      
       timerInterval = setInterval(function(){
 
         //decrement by 1
         currentTimer --;
 
         //write time to #timer
-        $('#timer').text(currentTimer);
+        //$('#timer').text(currentTimer);
 
         //when timer reaches 0, clear interval and move to Results
         if(currentTimer===0){
@@ -165,7 +169,9 @@ function refreshScreen(){
 
       $('.incorrect-answer').css('visibility', 'hidden');
 
-      //highlight correct answer in green *** not implemented
+      //highlight correct answer in green
+
+      $('.correct-answer').addClass('btn-success');
       
       break;    
 
@@ -176,6 +182,7 @@ function refreshScreen(){
 
         //clear panel
         $('#main-panel').html('');
+        $('#timer').text('');
 
         //if score > highscore, highscore=score
 
@@ -188,7 +195,7 @@ function refreshScreen(){
         // show restart button
         var startButton = $('<button>');
         startButton.text('Start Game!');
-        startButton.addClass('start-button');
+        startButton.addClass('start-button btn btn-default');
         $('#main-panel').append(startButton);
 
       }
@@ -225,14 +232,13 @@ $(document).on("click", ".answer-button", function(){
     
     $(this).removeClass('incorrect-answer');
 
-    // if answer correct, increment correct answers
+    // if answer correct, increment correct answers, if guessed wrong highlight in red
 
     if( $(this).attr('data-value') === 'correct'){
       questionsRight ++;
-      $(this).addClass('correct-guessed-answer');
     }
     else{
-      $(this).addClass('incorrect-guessed-answer');
+      $(this).addClass('btn-danger');
     }
     gameMode = "triviaResult";
 
