@@ -41,9 +41,15 @@ function refreshScreen(){
       $('#timer').text('');
 
       // create/append title
+      $('#main-panel').append('<img class="inline-image" src="https://media.giphy.com/media/14gztnGq8HtZUQ/giphy.gif">')
+
       var title = $('<h1>');
-      title.text('Trivia Game!!');
+      title.text('Scott Pilgrim Trivia');
       $('#main-panel').append(title);
+
+      $('#main-panel').append('<img class="inline-image" src="https://media.giphy.com/media/1L3JJulZNiquQ/giphy.gif">')
+
+      $('#main-panel').append('<br>');
 
       // create/append startbutton
       var startButton = $('<button>');
@@ -90,10 +96,15 @@ function refreshScreen(){
 
       // display question in main-panel
 
+      var currentQuestionDiv = $('<div>');
       var currentQuestionText = $('<h2>');
+
+      currentQuestionText.addClass('jumbotron');
+
       currentQuestionText.text(currentQuestion.questionText);
 
-      $('#main-panel').append(currentQuestionText);
+      currentQuestionDiv.append(currentQuestionText)
+      $('#main-panel').append(currentQuestionDiv);
 
       // display answer buttons in random order
 
